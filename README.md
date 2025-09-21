@@ -14,10 +14,10 @@ Extensible for multiple programming languages
 
 -> common steps are:
 
-Import Flask + OpenAI
-Initialize Flask
-Set API key
-Define routes (/, /generate, etc.)
-Call OpenAI API inside a route
-Return the response
-Run the app
+Import Flask + OpenAI,
+Initialize Flask,
+Set API key,
+Define routes (/, /generate, etc.),
+Call OpenAI API inside a route,
+Return the response,
+Run the app.
