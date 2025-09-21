@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Code Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #4f46e5;
+      color: #fff;
+      width: 100%;
+      text-align: center;
+      padding: 1rem 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    main {
+      background: #fff;
+      margin-top: 2rem;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 600px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 1rem;
+      display: block;
+      color: #333;
+    }
+
+    textarea, input {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: border 0.3s;
+    }
+
+    textarea:focus, input:focus {
+      outline: none;
+      border: 1px solid #4f46e5;
+      box-shadow: 0 0 4px rgba(79,70,229,0.4);
+    }
+
+    button {
+      margin-top: 1.5rem;
+      background: #4f46e5;
+      color: #fff;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #3730a3;
+    }
+
+    #generatedCode {
+      background: #f9fafb;
+      font-family: monospace;
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🚀 Code Generator</h1>
+  </header>
+  <main>
+    <label for="taskDescription">Task Description:</label>
+    <textarea id="taskDescription" rows="4" placeholder="Enter the task description..."></textarea>
+
+    <label for="programmingLanguage">Programming Language:</label>
+    <input type="text" id="programmingLanguage" placeholder="Enter the programming language...">
+
+    <button onclick="generateCode()">Generate Code</button>
+
+    <label for="generatedCode">Generated Code:</label>
+    <textarea id="generatedCode" rows="12" readonly></textarea>
+  </main>
+
+  <script>
+    async function generateCode() {
+      const task_description = document.getElementById('taskDescription').value;
+      const programming_language = document.getElementById('programmingLanguage').value;
+
+      const response = await fetch('http://localhost:5000/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task_description, programming_language })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        document.getElementById('generatedCode').value = result.generated_code;
+      } else {
+        alert('Error: ' + result.error);
+      }
+    }
+  </script>
+</body>
+</html>
